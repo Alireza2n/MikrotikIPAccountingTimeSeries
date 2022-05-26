@@ -1,0 +1,22 @@
+version: '3'
+networks:
+  BACKEND:
+volumes:
+  DB:
+services:
+  app:
+    image: "tsapp:latest"
+    restart: "unless-stopped"
+    env_file:
+      - sample.env
+    networks:
+      - BACKEND
+  db:
+    image: "questdb/questdb"
+    restart: "unless-stopped"
+    networks:
+      - BACKEND
+    ports:
+      - 9000:9000
+    volumes:
+      - DB:/root/.questdb/db
